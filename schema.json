@@ -1,0 +1,90 @@
+[
+  {
+    "tableName": "x_ai_itsm_model_config",
+    "label": "AI Model Configuration",
+    "columns": [
+      { "element": "provider_name", "label": "Provider Name", "type": "choice", "max_length": 40, "choices": ["Antigravity AI", "Groq", "Gemini", "Claude", "OpenAI"] },
+      { "element": "endpoint_url", "label": "Endpoint URL", "type": "string", "max_length": 255 },
+      { "element": "api_key", "label": "API Key", "type": "string", "max_length": 255 },
+      { "element": "model_name", "label": "Model Name", "type": "string", "max_length": 100 },
+      { "element": "timeout", "label": "Timeout (seconds)", "type": "integer", "default_value": "30" },
+      { "element": "temperature", "label": "Temperature", "type": "decimal", "max_length": 4, "default_value": "0.7" },
+      { "element": "max_tokens", "label": "Max Tokens", "type": "integer", "default_value": "2048" },
+      { "element": "active", "label": "Active", "type": "boolean", "default_value": "true" }
+    ]
+  },
+  {
+    "tableName": "x_ai_itsm_prompt_library",
+    "label": "AI Prompt Library",
+    "columns": [
+      { "element": "name", "label": "Name", "type": "string", "max_length": 100 },
+      { "element": "purpose", "label": "Purpose", "type": "choice", "max_length": 40, "choices": ["classification", "summarization", "knowledge", "resolution", "change_risk", "chatbot"] },
+      { "element": "prompt_template", "label": "Prompt Template", "type": "string", "max_length": 8000 },
+      { "element": "version", "label": "Version", "type": "string", "max_length": 10, "default_value": "1.0" },
+      { "element": "active", "label": "Active", "type": "boolean", "default_value": "true" }
+    ]
+  },
+  {
+    "tableName": "x_ai_itsm_request",
+    "label": "AI Request Log",
+    "columns": [
+      { "element": "request_type", "label": "Request Type", "type": "choice", "max_length": 40, "choices": ["classifier", "summarizer", "knowledge", "resolution", "change_risk", "chatbot"] },
+      { "element": "source_table", "label": "Source Table", "type": "string", "max_length": 80 },
+      { "element": "source_id", "label": "Source ID", "type": "string", "max_length": 40 },
+      { "element": "status", "label": "Status", "type": "choice", "max_length": 40, "choices": ["pending", "processing", "completed", "failed"] },
+      { "element": "error_message", "label": "Error Message", "type": "string", "max_length": 4000 },
+      { "element": "model_used", "label": "Model Used", "type": "string", "max_length": 100 },
+      { "element": "tokens_used", "label": "Tokens Used", "type": "integer", "default_value": "0" },
+      { "element": "request_payload", "label": "Request Payload", "type": "string", "max_length": 8000 },
+      { "element": "response_payload", "label": "Response Payload", "type": "string", "max_length": 8000 }
+    ]
+  },
+  {
+    "tableName": "x_ai_itsm_ai_log",
+    "label": "AI Performance Log",
+    "columns": [
+      { "element": "module", "label": "Module", "type": "choice", "max_length": 40, "choices": ["Incident Classifier", "Summarizer", "Knowledge", "Resolution", "Change Risk", "Chatbot"] },
+      { "element": "action", "label": "Action", "type": "string", "max_length": 100 },
+      { "element": "model", "label": "Model", "type": "string", "max_length": 100 },
+      { "element": "user", "label": "User", "type": "reference", "reference": "sys_user" },
+      { "element": "execution_time_ms", "label": "Execution Time (ms)", "type": "integer" },
+      { "element": "token_count", "label": "Token Count", "type": "integer" },
+      { "element": "cost", "label": "Cost ($)", "type": "decimal", "max_length": 10 }
+    ]
+  },
+  {
+    "tableName": "x_ai_itsm_ai_feedback",
+    "label": "AI Feedback",
+    "columns": [
+      { "element": "target_record", "label": "Target Record", "type": "string", "max_length": 100 },
+      { "element": "feedback_rating", "label": "Feedback Rating", "type": "choice", "max_length": 40, "choices": ["positive", "negative"] },
+      { "element": "feedback_comment", "label": "Feedback Comment", "type": "string", "max_length": 1000 },
+      { "element": "accuracy_verified", "label": "Accuracy Verified", "type": "boolean", "default_value": "false" },
+      { "element": "original_suggestion", "label": "Original Suggestion", "type": "string", "max_length": 4000 },
+      { "element": "user_correction", "label": "User Correction", "type": "string", "max_length": 4000 }
+    ]
+  },
+  {
+    "tableName": "x_ai_itsm_recommendation",
+    "label": "AI Knowledge Recommendation",
+    "columns": [
+      { "element": "target_record", "label": "Target Record", "type": "string", "max_length": 100 },
+      { "element": "knowledge_article", "label": "Knowledge Article", "type": "reference", "reference": "kb_knowledge" },
+      { "element": "relevancy_score", "label": "Relevancy Score (%)", "type": "decimal", "max_length": 5 },
+      { "element": "suggestion_type", "label": "Suggestion Type", "type": "choice", "max_length": 40, "choices": ["Troubleshooting", "Resolution"] }
+    ]
+  },
+  {
+    "tableName": "x_ai_itsm_risk_assessment",
+    "label": "AI Change Risk Assessment",
+    "columns": [
+      { "element": "change_request", "label": "Change Request", "type": "reference", "reference": "change_request" },
+      { "element": "risk_score", "label": "Risk Score (0-100)", "type": "integer" },
+      { "element": "risk_level", "label": "Risk Level", "type": "choice", "max_length": 40, "choices": ["Low", "Medium", "High", "Critical"] },
+      { "element": "assessment_summary", "label": "Assessment Summary", "type": "string", "max_length": 4000 },
+      { "element": "rollback_plan", "label": "Rollback Plan", "type": "string", "max_length": 4000 },
+      { "element": "testing_plan", "label": "Testing Plan", "type": "string", "max_length": 4000 },
+      { "element": "recommendation", "label": "Approval Recommendation", "type": "string", "max_length": 1000 }
+    ]
+  }
+]

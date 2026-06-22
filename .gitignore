@@ -1,0 +1,6 @@
+.env
+node_modules/
+.gemini/
+brain/
+scratch/
+*.log
